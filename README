@@ -1,0 +1,71 @@
+
+README (VarBash)
+
+    Definition
+
+        Script to check Bash scripts for empty or unused Bash variables to
+        avoid some possible mess.
+
+    Details
+
+        Empty or unused variables inside scripts are unnecessary and can lead
+        some (maybe fatal) problems. Even though a developer of shell scripts
+        should survey the code before using them, typos in variables may be
+        missed.
+
+        This is a simple example:
+
+            #!/bin/bash
+
+            remove_dir="$1"
+            rm -fR ${remvoe_dir}*
+
+        In this case, there is a typo inside the variable name in the line
+        that contains the 'rm' command. Due to this, that variable is empty
+        and the actual command looks like this:
+
+            rm -fR *
+
+        When executed, the 'rm' command will remove all directories and files
+        in the current working directory no matter which argument gets passed
+        to the script.
+
+        To avoid such a situation, the 'varbash.sh' script tries to detect
+        lines where variables are used that never got assigned before as shown
+        in the example above.
+
+        However, it is not absolutely reliable and returns still some false
+        positives. You can see that by running the script to test itself.
+
+        Anyway, this script is (or was) just an attempt and not intended for
+        everyday use or anything like that.
+
+        Feel free to modify!
+
+    Usage
+
+        Just run the script and pass the path to the Bash script you want to
+        check as the first command-line argument, for example:
+
+            $ ./varbash.sh /tmp/foobar.sh
+
+    Exit codes
+
+        If you want to redirect or suppress the standard output, you can
+        evaluate the exit codes as follows. Notice that these have been
+        revised. For version 1.0.3 and above:
+
+            0 - No error and no variable issues have been found
+            1 - Wrong number of command-line arguments
+            2 - The given path is no file
+            3 - The given file does not exist
+            4 - All types of variable issues have been found
+            5 - Variables without initially assigned value found, only
+            6 - Unused variables found, only
+
+        Before version 1.0.3:
+
+            0 - No error and no variable issues have been found
+            1 - The given path is either no file or does not exist
+            2 - No error but variable issues have been found
+
