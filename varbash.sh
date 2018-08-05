@@ -5,8 +5,8 @@
 # Copyright (C) 2017 by Ralf Kilian
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
-# Website: http://www.urbanware.org
 # GitHub: https://github.com/urbanware-org/varbash
+# GitLab: https://gitlab.com/urbanware-org/varbash
 # ============================================================================
 
 version="1.0.3"
