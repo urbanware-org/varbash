@@ -40,18 +40,25 @@ current_line=0
 exit_code=0
 issue_noinit=0
 issue_unused=0
-item=""
 
 while read line; do
     current_line=$(( current_line + 1 ))
-    for item in $(echo "$line"); do
-        if [ "$item" = "\$#" ]; then
+    for item in $line; do
+        if [ "$item" = "\$#" ] || [ "$item" = "\$_" ] || \
+           [ "$item" = "\$-" ] || [ "$item" = "\$?" ] || \
+           [ "$item" = "\$$" ] || [ "$item" = "\$!" ] || \
+           [ "$item" = "\$*" ] || [ "$item" = "\$@" ]; then
+            continue
+        elif [[ $item =~ \$[0-9] ]]; then
+            continue
+        elif [[ $item =~ \$\[.*\] ]]; then
             continue
         fi
-        echo "$line" | grep -E "=''$|=\"\"$|=$" | grep -v "^#" &>/dev/null
-        if [ "$?" = "0" ]; then
+
+        (grep -E "=''$|=\"\"$|=$" | grep -v "^#") <<< $line &>/dev/null
+        if [ $? -eq 0 ]; then
             echo -e "\e[1;33mLine $current_line: Initially no"\
-                    "value assigned (maybe on purpose): \e[1;31m${line}\e[0m"
+                    "value assigned (maybe on purpose): \e[1;31m${item}\e[0m"
             count=$(( count + 1 ))
             issue_noinit=1
             continue
@@ -68,16 +75,22 @@ while read line; do
             elif [[ $item =~ \: ]]; then
                 continue
             fi
-            temp=$((sed -e 's/\$//g') <<< $item)
-            varname=$((sed -e 's/{//g' -e 's/}//g') <<< $temp)
 
-            grep "$varname=" "$input_file" &>/dev/null
-            if [ "$?" != "0" ]; then
-                echo -e "\e[1;36mLine $current_line: Possibly never used"\
-                        "variable: \e[1;37m${item}\e[0m"
-                count=$(( count + 1 ))
-                issue_unused=1
-            fi
+            temp=$((sed -e 's/^\$//g' -e 's/;//g' -e 's/\$/ /g' -e 's/{//g' \
+                        -e 's/}//g') <<< $item)
+            for varname in $temp; do
+                grep "$varname" $input_file | grep -E "for|while" &>/dev/null
+                if [ $? -eq 0 ]; then
+                    continue
+                fi
+                grep "$varname=" $input_file &>/dev/null
+                if [ $? -ne 0 ]; then
+                    echo -e "\e[1;36mLine $current_line: Possibly undefined"\
+                            "variable: \e[1;37m\$${varname}\e[0m"
+                    count=$(( count + 1 ))
+                    issue_unused=1
+                fi
+            done
         fi
     done
 done < $input_file
