@@ -15,7 +15,7 @@ README (VarBash)
 
         This is a simple example:
 
-            #!/bin/bash
+            #!/usr/bin/env bash
 
             remove_dir="$1"
             rm -fR ${remvoe_dir}*
