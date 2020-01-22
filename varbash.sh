@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 # ============================================================================
 # VarBash - Bash variable issue check script
@@ -117,4 +117,3 @@ echo
 exit $exit_code
 
 # EOF
-
