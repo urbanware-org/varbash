@@ -35,7 +35,7 @@ README (VarBash)
         in the example above.
 
         However, it is not absolutely reliable and returns still some false
-        positives. You can see that by running the script to test itself.
+        positives.
 
         Anyway, this script is (or was) just an attempt and not intended for
         everyday use or anything like that.
