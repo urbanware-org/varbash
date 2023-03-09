@@ -35,6 +35,13 @@ else
 fi
 echo
 
+cl_n="\e[0m"
+cl_br="\e[33m"
+cl_dc="\e[36m"
+cl_lc="\e[96m"
+cl_wh="\e[97m"
+cl_yl="\e[93m"
+
 count=0
 current_line=0
 exit_code=0
@@ -58,8 +65,8 @@ for current_line in $(seq 1 $lines_total); do
 
         (grep -E "=''$|=\"\"$|=$" | grep -v "^#") <<< $line &>/dev/null
         if [ $? -eq 0 ]; then
-            echo -e "\e[1;33mLine $current_line: Initially no"\
-                    "value assigned (maybe on purpose): \e[1;31m${item}\e[0m"
+            echo -e "${cl_br}Line $current_line:\tInitially no"\
+                    "value assigned:  ${cl_yl}${item}${cl_n}"
             count=$(( count + 1 ))
             issue_noinit=1
             continue
@@ -88,8 +95,9 @@ for current_line in $(seq 1 $lines_total); do
                 fi
                 grep "$varname=" $input_file &>/dev/null
                 if [ $? -ne 0 ]; then
-                    echo -e "\e[1;36mLine $current_line: Possibly undefined"\
-                            "variable: \e[1;37m\$${varname}\e[0m"
+                    echo -e \
+                        "${cl_dc}Line $current_line:\tPossibly undefined" \
+                        "variable:  ${cl_lc}\$${varname}${cl_n}"
                     count=$(( count + 1 ))
                     issue_unused=1
                 fi
