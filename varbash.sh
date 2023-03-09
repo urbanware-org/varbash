@@ -1,13 +1,13 @@
 #!/usr/bin/env bash
 
-# ============================================================================
+#
 # VarBash - Bash variable issue check script
-# Copyright (C) 2017 by Ralf Kilian
+# Copyright (C) 2023 by Ralf Kilian
 # Distributed under the MIT License (https://opensource.org/licenses/MIT)
 #
 # GitHub: https://github.com/urbanware-org/varbash
 # GitLab: https://gitlab.com/urbanware-org/varbash
-# ============================================================================
+#
 
 version="1.0.3"
 
