@@ -71,9 +71,11 @@ for current_line in $(seq 1 $lines_total); do
                 continue
             elif [[ $item =~ \) ]]; then
                 continue
+            elif [[ $item =~ \: ]]; then
+                continue
             elif [[ $item =~ \" ]]; then
                 continue
-            elif [[ $item =~ \: ]]; then
+            elif [[ $item =~ \' ]]; then
                 continue
             fi
 
