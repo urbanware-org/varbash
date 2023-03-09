@@ -41,8 +41,9 @@ exit_code=0
 issue_noinit=0
 issue_unused=0
 
-while read line; do
-    current_line=$(( current_line + 1 ))
+lines_total=$(wc -l "$input_file" | awk '{ print $1 }')
+for current_line in $(seq 1 $lines_total); do
+    line=$(awk "NR==$current_line" "$input_file")
     for item in $line; do
         if [ "$item" = "\$#" ] || [ "$item" = "\$_" ] || \
            [ "$item" = "\$-" ] || [ "$item" = "\$?" ] || \
