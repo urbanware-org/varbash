@@ -115,17 +115,18 @@ elif [ $issue_unused -eq 1 ]; then
     exit_code=6
 fi
 
-if [ $count -eq 0 ]; then
-    echo "No variable issues found. Please manually revise the code anyway."
-elif [ $count -eq 1 ]; then
-    echo
-    echo "Found one possible issue. Details can be found above."
-else
-    echo
-    echo "Found $count possible issues. Details can be found above."
-fi
+total_count=$(( count_unused + count_noinit))
 echo
-
+echo -e "Analysis summary:"
+echo
+echo -e "  - Initially no values assigned: ${cl_yl}$count_noinit${cl_n}"
+echo -e "  - Possibly undefined variables: ${cl_lc}$count_unused${cl_n}"
+echo
+echo -e "  - Lines processed total: ${cl_wh}$lines_total${cl_n}"
+echo -e "  - Variable issues found: ${cl_wh}$total_count${cl_n}"
+echo
+echo -e "Finished."
+echo
 exit $exit_code
 
 # EOF
