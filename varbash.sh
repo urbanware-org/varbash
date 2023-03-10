@@ -53,6 +53,7 @@ cl_lr="\e[91m"
 cl_wh="\e[97m"
 cl_yl="\e[93m"
 
+count_critical=0
 count_noinit=0
 count_undefined=0
 current_line=0
@@ -120,6 +121,23 @@ for current_line in $(seq 1 $lines_total); do
                         "variable:  ${cl_lc}\$${varname}${cl_n}"
                     count_undefined=$(( count_undefined + 1 ))
                     issue_undefined=1
+
+                    grep -E "mv\ |rm\ " <<< $line &>/dev/null
+                    if [ $? -eq 0 ]; then
+                        grep -E "mv\ " <<< $line &>/dev/null
+                        if [ $? -eq 0 ]; then
+                            critical="mv"
+                        else
+                            critical="rm"
+                        fi
+                        echo -e \
+                            "${cl_dr}[${cl_lr}!${cl_dr}]" \
+                            "Line $current_line:\\tVariable" \
+                            "'${cl_lr}\$$varname${cl_dr}'" \
+                            "also in same line with"\
+                            "'${cl_lr}$critical${cl_dr}' command${cl_n}"
+                        count_critical=$(( count_critical + 1 ))
+                    fi
                 fi
             done
         fi
