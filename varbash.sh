@@ -35,23 +35,23 @@ else
 fi
 echo
 
-cl_n="\e[0m"
-cl_bk="\e[30m"
-cl_br="\e[33m"
-cl_db="\e[34m"
-cl_dc="\e[36m"
-cl_dy="\e[90m"
-cl_dg="\e[32m"
-cl_dp="\e[35m"
-cl_dr="\e[31m"
-cl_lb="\e[94m"
-cl_lc="\e[96m"
-cl_ly="\e[37m"
-cl_lg="\e[92m"
-cl_lp="\e[95m"
-cl_lr="\e[91m"
-cl_wh="\e[97m"
-cl_yl="\e[93m"
+cl_n="\e[0m"    # none (default)
+cl_bk="\e[30m"  # black
+cl_br="\e[33m"  # brown
+cl_db="\e[34m"  # dark blue
+cl_dc="\e[36m"  # dark cyan
+cl_dy="\e[90m"  # dark gray
+cl_dg="\e[32m"  # dark green
+cl_dp="\e[35m"  # dark purple
+cl_dr="\e[31m"  # dark red
+cl_lb="\e[94m"  # light blue
+cl_lc="\e[96m"  # light cyan
+cl_ly="\e[37m"  # light gray
+cl_lg="\e[92m"  # light green
+cl_lp="\e[95m"  # light purple
+cl_lr="\e[91m"  # light red
+cl_wh="\e[97m"  # white
+cl_yl="\e[93m"  # yellow
 
 count_critical=0
 count_noinit=0
