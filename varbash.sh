@@ -152,12 +152,24 @@ elif [ $issue_undefined -eq 1 ]; then
     exit_code=6
 fi
 
-total_count=$(( count_undefined + count_noinit))
-echo
+total_count=$(( count_critical + count_noinit + count_undefined ))
+if [ $total_count -gt 0 ]; then
+    echo
+fi
 echo -e "Analysis summary:"
 echo
 echo -e "  - Initially no values assigned: ${cl_yl}$count_noinit${cl_n}"
+echo
 echo -e "  - Possibly undefined variables: ${cl_lc}$count_undefined${cl_n}"
+if [ $count_undefined -gt 0 ]; then
+    if [ $count_critical -gt 0 ]; then
+        cl_crit=$cl_lr
+    else
+        cl_crit=$cl_dy
+    fi
+    echo -e "  - In combination with critical commands:" \
+            "${cl_crit}$count_critical${cl_n}"
+fi
 echo
 echo -e "  - Lines processed total: ${cl_wh}$lines_total${cl_n}"
 echo -e "  - Variable issues found: ${cl_wh}$total_count${cl_n}"
