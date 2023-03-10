@@ -54,11 +54,11 @@ cl_wh="\e[97m"
 cl_yl="\e[93m"
 
 count_noinit=0
-count_unused=0
+count_undefined=0
 current_line=0
 exit_code=0
 issue_noinit=0
-issue_unused=0
+issue_undefined=0
 
 lines_total=$(wc -l "$input_file" | awk '{ print $1 }')
 for current_line in $(seq 1 $lines_total); do
@@ -110,28 +110,28 @@ for current_line in $(seq 1 $lines_total); do
                     echo -e \
                         "${cl_dc}Line $current_line:\tPossibly undefined" \
                         "variable:  ${cl_lc}\$${varname}${cl_n}"
-                    count_unused=$(( count_unused + 1 ))
-                    issue_unused=1
+                    count_undefined=$(( count_undefined + 1 ))
+                    issue_undefined=1
                 fi
             done
         fi
     done
 done < $input_file
 
-if [ $issue_noinit -eq 1 ] && [ $issue_unused -eq 1 ]; then
+if [ $issue_noinit -eq 1 ] && [ $issue_undefined -eq 1 ]; then
     exit_code=4
 elif [ $issue_noinit -eq 1 ]; then
     exit_code=5
-elif [ $issue_unused -eq 1 ]; then
+elif [ $issue_undefined -eq 1 ]; then
     exit_code=6
 fi
 
-total_count=$(( count_unused + count_noinit))
+total_count=$(( count_undefined + count_noinit))
 echo
 echo -e "Analysis summary:"
 echo
 echo -e "  - Initially no values assigned: ${cl_yl}$count_noinit${cl_n}"
-echo -e "  - Possibly undefined variables: ${cl_lc}$count_unused${cl_n}"
+echo -e "  - Possibly undefined variables: ${cl_lc}$count_undefined${cl_n}"
 echo
 echo -e "  - Lines processed total: ${cl_wh}$lines_total${cl_n}"
 echo -e "  - Variable issues found: ${cl_wh}$total_count${cl_n}"
