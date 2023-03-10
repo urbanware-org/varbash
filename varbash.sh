@@ -63,6 +63,12 @@ issue_undefined=0
 lines_total=$(wc -l "$input_file" | awk '{ print $1 }')
 for current_line in $(seq 1 $lines_total); do
     line=$(awk "NR==$current_line" "$input_file")
+
+    grep -E "^#|[^\s]#" <<< $line &>/dev/null
+    if [ $? -eq 0 ]; then
+        continue
+    fi
+
     for item in $line; do
         if [ "$item" = "\$#" ] || [ "$item" = "\$_" ] || \
            [ "$item" = "\$-" ] || [ "$item" = "\$?" ] || \
@@ -75,7 +81,7 @@ for current_line in $(seq 1 $lines_total); do
             continue
         fi
 
-        (grep -E "=''$|=\"\"$|=$" | grep -v "^#") <<< $line &>/dev/null
+        grep -E "=''$|=\"\"$|=$" <<< $line &>/dev/null
         if [ $? -eq 0 ]; then
             echo -e "${cl_br}Line $current_line:\tInitially no"\
                     "value assigned:  ${cl_yl}${item}${cl_n}"
