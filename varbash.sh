@@ -83,7 +83,8 @@ for current_line in $(seq 1 $lines_total); do
 
         grep -E "=''$|=\"\"$|=$" <<< $line &>/dev/null
         if [ $? -eq 0 ]; then
-            echo -e "${cl_br}Line $current_line:\tInitially no"\
+            echo -e "${cl_br}[${cl_yl}?${cl_br}] Line" \
+                    "$current_line:\tInitially no" \
                     "value assigned:  ${cl_yl}${item}${cl_n}"
             count_noinit=$(( count_noinit + 1 ))
             issue_noinit=1
@@ -114,7 +115,8 @@ for current_line in $(seq 1 $lines_total); do
                 grep "$varname=" $input_file &>/dev/null
                 if [ $? -ne 0 ]; then
                     echo -e \
-                        "${cl_dc}Line $current_line:\tPossibly undefined" \
+                        "${cl_dc}[${cl_lc}?${cl_dc}]" \
+                        "Line $current_line:\tPossibly undefined" \
                         "variable:  ${cl_lc}\$${varname}${cl_n}"
                     count_undefined=$(( count_undefined + 1 ))
                     issue_undefined=1
