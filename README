@@ -3,15 +3,15 @@ README (VarBash)
 
     Definition
 
-        Script to check Bash scripts for empty or unused Bash variables to
+        Script to check Bash scripts for empty or undefined Bash variables to
         avoid some possible mess.
 
     Details
 
-        Empty or unused variables inside scripts are unnecessary and can lead
-        some (maybe fatal) problems. Even though a developer of shell scripts
-        should survey the code before using them, typos in variables may be
-        missed.
+        Empty or undefined variables inside scripts are unnecessary and can
+        lead some (maybe fatal) problems. Even though a developer of shell
+        scripts should survey the code before using them, typos in variables
+        may be missed.
 
         This is a simple example:
 
@@ -63,7 +63,7 @@ README (VarBash)
             3 - The given file does not exist
             4 - All types of variable issues have been found
             5 - Variables without initially assigned value found, only
-            6 - Unused variables found, only
+            6 - Undefined variables found, only
 
         Before version 1.0.3:
 
