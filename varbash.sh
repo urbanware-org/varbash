@@ -36,9 +36,20 @@ fi
 echo
 
 cl_n="\e[0m"
+cl_bk="\e[30m"
 cl_br="\e[33m"
+cl_db="\e[34m"
 cl_dc="\e[36m"
+cl_dy="\e[90m"
+cl_dg="\e[32m"
+cl_dp="\e[35m"
+cl_dr="\e[31m"
+cl_lb="\e[94m"
 cl_lc="\e[96m"
+cl_ly="\e[37m"
+cl_lg="\e[92m"
+cl_lp="\e[95m"
+cl_lr="\e[91m"
 cl_wh="\e[97m"
 cl_yl="\e[93m"
 
