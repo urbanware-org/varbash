@@ -49,6 +49,14 @@ README (VarBash)
 
             $ ./varbash.sh /tmp/foobar.sh
 
+        If you want to check multiple files (e.g. if they have a releation),
+        you can simply merge them. For example, to check all script files
+        inside the directory '/opt/scripts' and its sub-directories with the
+        file extension '.sh', you can do that as follows:
+
+            $ cat $(find /opt/scripts | grep "\.sh$") >> /tmp/scripts.tmp
+            $ ./varbash.sh /tmp/scripts.tmp
+
     Exit codes
 
         If you want to redirect or suppress the standard output, you can
