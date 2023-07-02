@@ -9,7 +9,7 @@
 # GitLab: https://gitlab.com/urbanware-org/varbash
 #
 
-version="1.0.3"
+version="1.1.0"
 
 if [ $# -lt 1 ]; then
     echo "error: File path command-line argument missing"
