@@ -9,7 +9,7 @@ README (VarBash)
     Details
 
         Empty or undefined variables inside scripts are unnecessary and can
-        lead some (maybe fatal) problems. Even though a developer of shell
+        lead to some (maybe fatal) problems. Even though, a developer of shell
         scripts should survey the code before using them, typos in variables
         may be missed.
 
@@ -18,27 +18,28 @@ README (VarBash)
             #!/usr/bin/env bash
 
             remove_dir="$1"
-            rm -fR ${remvoe_dir}*
+            rm -fR ${remvoe_dir}/*
 
         In this case, there is a typo inside the variable name in the line
         that contains the 'rm' command. Due to this, that variable is empty
         and the actual command looks like this:
 
-            rm -fR *
+            rm -fR /*
 
         When executed, the 'rm' command will remove all directories and files
-        in the current working directory no matter which argument gets passed
-        to the script.
+        from the root directory of the system, leading to severe as well as
+        irreversible consequences, no matter which argument gets passed to
+        the script. 
 
-        To avoid such a situation, the 'varbash.sh' script tries to detect
+        To avoid such a situation, the 'varbash.sh' script tries to detect the
         lines where variables are used that never got assigned before as shown
-        in the example above.
+        in the example above. In this case:
+
+            Line 4:  Possibly undefined variable:  $remvoe_dir/*
+            Line 4:  Variable '$remvoe_dir/*' in same line with 'rm' command
 
         However, it is not absolutely reliable and returns still some false
         positives.
-
-        Anyway, this script is (or was) just an attempt and not intended for
-        everyday use or anything like that.
 
         Feel free to modify!
 
@@ -63,7 +64,7 @@ README (VarBash)
         evaluate the exit codes as follows. Notice that these have been
         revised.
 
-        For version 1.0.3 and above:
+        Version 1.0.3 and above:
 
             0 - No error and no variable issues have been found
             1 - Wrong number of command-line arguments
@@ -73,7 +74,7 @@ README (VarBash)
             5 - Variables without initially assigned value found, only
             6 - Undefined variables found, only
 
-        Before version 1.0.3:
+        Below version 1.0.3:
 
             0 - No error and no variable issues have been found
             1 - The given path is either no file or does not exist
